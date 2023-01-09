@@ -1,0 +1,19 @@
+.description {
+    min-height: 700px;
+    background: url('../../img/second_bg/bg__img.jpg') center (center/cover) no-repeat;
+    &__content {
+        width: 600px;
+        color: #fff;
+        margin-top: 180px;
+        &-title {
+            width: 400px;
+            font-size: 45px;
+            text-transform: uppercase;
+        }
+        &-text {
+            margin-top: 20px;
+            font-weight: 300;
+            line-height: 28px;
+        }
+    }
+}

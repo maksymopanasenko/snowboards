@@ -1,0 +1,35 @@
+.footer {
+    height: 300px;
+    background: #000;
+    color: #fff;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    &__column {
+
+        &__list {
+            margin-top: 10px;
+            list-style: none;
+        }
+
+        &__social {
+            &-item {
+                text-decoration: none;
+                img {
+                    width: 30px;
+                }
+                
+            }
+        }
+    }
+
+    &__undercontent {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+    }
+}
