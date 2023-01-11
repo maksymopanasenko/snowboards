@@ -1,11 +1,10 @@
 .promo {
     position: relative;
-    height: 100vh;
+    height: calc(100vh - 90px);
     z-index: 2;
-    // background: url('../img/bg/snowboarding-1.jpg') center (center/cover) no-repeat;
     &__bg {
         img {
-            height: 100vh;
+            height: 100%;
             width: 100%;
             position: absolute;
             z-index: -1;
@@ -15,7 +14,7 @@
         width: 560px;
         font-size: 60px;
         text-transform: uppercase;
-        padding: 270px 0 0 20px;
+        padding: 220px 0 0 20px;
     }
     &__btn {
         width: 100px;

@@ -1,24 +1,51 @@
 .footer {
-    height: 300px;
+    min-height: 300px;
+    padding: 30px 0;
     background: #000;
     color: #fff;
 
     &__wrapper {
         display: flex;
         justify-content: space-between;
-        margin-top: 30px;
+
     }
 
     &__column {
+        position: relative;
 
         &__list {
-            margin-top: 10px;
+            margin-top: 18px;
             list-style: none;
+            &-item {
+                font-size: 14px;
+                font-weight: 300;
+                margin-top: 14px;
+            }
+        }
+
+        &__form {
+            margin-top: 18px;
+            display: flex;
+        }
+
+        &__input {
+            display: block;
+            height: 35px;
+            border: none;
+            padding: 3px;
+        }
+        &__btn {
+            height: 35px;
+            width: 40px;
+            border: none;
+            // position: absolute;
         }
 
         &__social {
+            margin-top: 60px;
             &-item {
                 text-decoration: none;
+                margin-right: 5px;
                 img {
                     width: 30px;
                 }
@@ -31,5 +58,25 @@
         display: flex;
         justify-content: space-between;
         margin-top: 50px;
+        &__info {
+            font-size: 14px;
+            span {
+                font-weight: 300;
+                font-size: 9px;
+            }
+        }
+
+        &__lang {
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;                
+                height: 10px;
+                width: 15px;
+                background: url('../../icons/united-states.png') center (center/cover) no-repeat;
+                left: -25px;
+                top: 5px;
+            }
+        }
     }
 }

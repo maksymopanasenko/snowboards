@@ -73,24 +73,34 @@
 
                 <div class="snowboards__slider">
                     <div class="visible"></div>
+                    <div class="snowboards__slider__arrow" id="arrow-prev">
+                        <img src="img/snowboards/arrows/prev.png" alt="prev">
+                    </div>
+                    <div class="snowboards__slider__arrow" id="arrow-next">
+                        <img src="img/snowboards/arrows/next.png" alt="next">
+                    </div>
                     <div class="snowboards__slider__collection">
-                        <div class="snowboards__slider__item">
-                            <img src="img/snowboards/board 1.png" alt="snowboard_1">
-                        </div>
-                        <div class="snowboards__slider__item">
-                            <img src="img/snowboards/board 2.png" alt="snowboard_2">
-                        </div>
-                        <div class="snowboards__slider__item">
-                            <img src="img/snowboards/board 3.png" alt="snowboard_3">
-                        </div>
-                        <div class="snowboards__slider__item">
-                            <img src="img/snowboards/board 4.png" alt="snowboard_4">
-                        </div>
-                        <div class="snowboards__slider__item">
-                            <img src="img/snowboards/board 5.png" alt="snowboard_5">
+                        <div class="snowboards__slider__inner">
+                            <div class="snowboards__slider__item">
+                                <img src="img/snowboards/board 1.png" alt="snowboard_1">
+                            </div>
+                            <div class="snowboards__slider__item">
+                                <img src="img/snowboards/board 2.png" alt="snowboard_2">
+                            </div>
+                            <div class="snowboards__slider__item one">
+                                <img src="img/snowboards/board 3.png" alt="snowboard_3">
+                            </div>
+                            <div class="snowboards__slider__item">
+                                <img src="img/snowboards/board 4.png" alt="snowboard_4">
+                            </div>
+                            <div class="snowboards__slider__item">
+                                <img src="img/snowboards/board 5.png" alt="snowboard_5">
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="snowboards__btn">Add to cart</div>
             </div>
         </section>
 
@@ -191,8 +201,10 @@
                     <h3 class="footer__column__title">
                         Newsletter
                     </h3>
-                    <input class="footer__column__input" type="text">
-                    <button class="footer__column__bnt">GO</button>
+                    <form action="#" class="footer__column__form">
+                        <input class="footer__column__input" type="text" placeholder="Enter your email">
+                        <button class="footer__column__btn">GO</button>
+                    </form>
                     <div class="footer__column__social">
                         <a href="#" class="footer__column__social-item">
                             <img src="icons/socials/facebook.png" alt="fb">
@@ -215,7 +227,8 @@
 
             <div class="footer__undercontent">
                 <div class="footer__undercontent__info">
-                    © 2023 Mountains Snowboards by Max Opanasenko                    
+                    © 2023 Mountains Snowboards
+                    <span>by Max Opanasenko</span>                    
                 </div>
 
                 <div class="footer__undercontent__lang">
@@ -224,6 +237,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="js/script.js"></script>
     
 </body>
 </html>

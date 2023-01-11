@@ -1,6 +1,8 @@
 .snowboards {
     min-height: 700px;
+    width: 100%;
     padding: 90px 0;
+    overflow: hidden;
     &__title {
         font-size: 32px;
         text-align: center;
@@ -12,32 +14,44 @@
     }
     &__slider {
         position: relative;
-        // background: rgba(255, 255, 255, 0.308);
         height: 405px;
-        // opacity: 1;
         margin-top: 100px;
-        &__collection {
+
+        &__arrow {
             position: absolute;
-            width: calc(260px * 5);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #arrow-prev {
+            left: -120px;
+            z-index: 10;
+        }
+        
+        #arrow-next {
+            right: -120px;
+            z-index: 10;
+        }
+        &__inner {
+            position: absolute;
+            width: calc(260px * 6);
             display: flex;
             justify-content: space-between;
-            left: -18%;
+            left: -300px;
         }
         &__item {
-            // opacity: 0.5;
+            opacity: 0.5;
         }
     }
-    .visible {
-        height: 405px;
-        width: 260px;
-        position: absolute;
-        z-index: 5;
-        // background: red;
-        left: 350px;
-        opacity: 0.5;
+
+    &__btn {
+        margin: 70px auto 0 auto;
+        width: 140px;
+        height: 60px;
+        background: #000;
+        color: #fff;
+        font-size: 20px;
+        line-height: 60px;
+        text-align: center;
+        cursor: pointer;
     }
-}
-.container {
-    
-    overflow: hidden;
 }
