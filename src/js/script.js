@@ -1,42 +1,99 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-    
-    const arrowNext = document.querySelector('#arrow-next'),
-          arrowPrev = document.querySelector('#arrow-prev'),
-          slides = document.querySelectorAll('.snowboards__slider__item'),
-          slidesWrapper = document.querySelector('.snowboards__slider__collection'),
-          slidesField = document.querySelector('.snowboards__slider__inner');
 
-    let slideIndex = 0;
+    const arrowNext = document.querySelector('#arrow-next'),
+    arrowPrev = document.querySelector('#arrow-prev'),
+    slides = document.querySelectorAll('.snowboards__slider__item'),
+    slidesField = document.querySelector('.snowboards__slider__inner');
+
+    let slideIndex = 1,
+    counter;
+
+
+    class Snowboard {
+        constructor(img, alt, title, number, price) {
+            this.img = img;
+            this.alt = alt;
+            this.title = title;
+            this.number = number;
+            this.price = price;
+        }
+
+        render() {
+            const elem = document.createElement('div');
+            elem.classList.add('snowboards__slider__item');
+            elem.innerHTML = `
+                <img src=${this.img} alt=${this.alt}>
+                <div class="snowboards__slider__item__descr">
+                    <div class="snowboards__slider__item-title">
+                        Article: <span>${this.title}</span>
+                    </div>
+                    <div class="snowboards__slider__item-number">
+                        Identity nr: <span>${this.number}</span>
+                    </div>
+                    <div class="snowboards__slider__item-price">
+                        Price: <span>${this.price} €</span>
+                    </div>
+                </div>
+            `;
+
+            slidesField.append(elem);
+        }
+    }
+
+    new Snowboard(
+        'img/snowboards/board_6.png',
+        'snowboard_6',
+        'Black And White',
+        '22-506',
+        40
+    ).render();
+
+    // slider
+        
+
+
+
 
     slides.forEach(item => {
-        item.style.opacity = 0.4; 
-     });        
-    slides[Math.floor(slides.length/2)].style.opacity = 1;
+        const width = window.getComputedStyle(item).width;
+        counter = width.slice(0, width.length-2) * slides.length;
+        item.style.opacity = 0.4;
+        item.classList.remove('price');
+    });
+
+    slidesField.style.cssText = `width: ${counter} + "px"; left: -41%`
+
+    slides[2].style.opacity = 1;
+    slides[2].classList.add('price');
+
 
     function getItem(arrow) {
         const slides = document.querySelectorAll('.snowboards__slider__item');
         slides.forEach(item => {
-            item.style.opacity = 0.4; 
+            item.style.opacity = 0.4;
+            item.classList.remove('price');
          });
 
         const other = document.createElement('div');
         other.classList.add('snowboards__slider__item');
         other.style.opacity = 0.4;
 
-        if (arrow == arrowPrev) {
+        if (arrow == arrowNext) {
             other.innerHTML = slides[0].innerHTML;
             slidesField.append(other);
             slides[0].remove();
-            slides[Math.floor(slides.length/2)+1].style.opacity = 1;
+            slides[3].style.opacity = 1;
+            slides[3].classList.add('price');
         }
 
-        if (arrow == arrowNext) {
+        if (arrow == arrowPrev) {
             other.innerHTML = slides[slides.length-1].innerHTML;
             slidesField.insertAdjacentElement('afterbegin', other);
             slides[slides.length-1].remove();
-            slides[Math.floor(slides.length/2)-1].style.opacity = 1;
+            slides[1].style.opacity = 1;
+            slides[1].classList.add('price');
         }
     }
 
@@ -47,6 +104,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     arrowNext.addEventListener('click', () => {
         getItem(arrowNext);
+    });
+
+    const buttonCart = document.querySelector('.snowboards__btn'),
+          quantity = document.querySelector('.header__basket__bag span'),
+          amount = document.querySelector('.header__basket__amount span');
+
+
+    buttonCart.addEventListener('click', () => {
+        const price = document.querySelectorAll('.snowboards__slider__item-price span');
+        quantity.innerHTML = slideIndex;
+        price.forEach(item => {
+            console.log();
+            if (item.parentElement.parentElement.parentElement.classList.contains('price')) {
+                amount.innerHTML = parseInt(amount.innerHTML) + parseInt(item.innerHTML.slice(0, item.innerHTML.length-2));
+            };
+        });
+        slideIndex++;
     });
 
 
