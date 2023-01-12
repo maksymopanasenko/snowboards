@@ -42,6 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    
+
+    // const getData = async (url) => {
+    //     const res = await fetch(url);
+
+    //     if (!res.ok) {
+    //         throw new Error(`Couldn't fetch ${url}, status: ${res.status}`);
+    //     }
+    
+    //     return await res.json();
+    // }
+
+    // getData('http://localhost:3000/snowboards')
+    //     .then(data => {
+    //         data.forEach(({img, alt, name, number, price}) => {
+    //             new Snowboard(img, alt, name, number, price).render();
+    //         });
+    //     });
+
     new Snowboard(
         'img/snowboards/board_6.png',
         'snowboard_6',
@@ -50,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
         40
     ).render();
 
+    
+
+
     // slider
-        
 
-
-
-
+    
     slides.forEach(item => {
         const width = window.getComputedStyle(item).width;
         counter = width.slice(0, width.length-2) * slides.length;
@@ -67,10 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     slides[2].style.opacity = 1;
     slides[2].classList.add('price');
+    
 
 
     function getItem(arrow) {
         const slides = document.querySelectorAll('.snowboards__slider__item');
+        
         slides.forEach(item => {
             item.style.opacity = 0.4;
             item.classList.remove('price');
@@ -98,13 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    arrowPrev.addEventListener('click', () => {
-        getItem(arrowPrev);
-    });
+    arrowPrev.addEventListener('click', () => getItem(arrowPrev));
 
-    arrowNext.addEventListener('click', () => {
-        getItem(arrowNext);
-    });
+    arrowNext.addEventListener('click', () => getItem(arrowNext));
 
     const buttonCart = document.querySelector('.snowboards__btn'),
           quantity = document.querySelector('.header__basket__bag span'),
@@ -123,7 +140,49 @@ document.addEventListener('DOMContentLoaded', () => {
         slideIndex++;
     });
 
+    // function final() {
 
+
+    // }
+
+
+    // server
+    
+    const form = document.querySelector('form');
+
+    bindPostData(form);
+
+    function bindPostData(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+             
+            const postData = async (url, data) => {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: data
+                });
+            
+                return await response.json();
+            };
+        
+            postData('http://localhost:3000/requests', json)
+            .then(data => {
+                console.log(data);
+            })
+            .catch(() =>{
+                console.log('error');
+            })
+            .finally(form.reset());
+
+        });
+    }
 
 
 
