@@ -185,6 +185,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // bg slider auto
+
+    const bgSlides = document.querySelectorAll('.promo__bg img');
+          
+    let bgSlideIndex = 0;
+
+    function hideSlides() {
+        bgSlides.forEach(item => {
+            item.classList.remove('show');
+            item.classList.add('hide');
+        });
+    }
+
+
+    function showCurrentSlide(index) {
+        bgSlides[index].classList.remove('hide');
+        bgSlides[index].classList.add('show', 'fade');
+    }
+
+    // hideSlides();
+    // showCurrentSlide();
+
+    // function changeBgSlides(index) {
+        
+    // }
+
+    // changeBgSlides(bgSlideIndex);
+    const slidesInterval = setInterval(() => {
+        hideSlides();
+        showCurrentSlide(bgSlideIndex);
+
+        bgSlideIndex++;
+
+        if (bgSlideIndex > 2) {
+            bgSlideIndex = 0;
+        }
+    }, 8000);
+
+
+
+
 
 
 
