@@ -44,49 +44,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
 
-    // const getData = async (url) => {
-    //     const res = await fetch(url);
+    const getData = async (url) => {
+        const res = await fetch(url);
 
-    //     if (!res.ok) {
-    //         throw new Error(`Couldn't fetch ${url}, status: ${res.status}`);
-    //     }
+        if (!res.ok) {
+            throw new Error(`Couldn't fetch ${url}, status: ${res.status}`);
+        }
     
-    //     return await res.json();
-    // }
+        return await res.json();
+    }
 
-    // getData('http://localhost:3000/snowboards')
-    //     .then(data => {
-    //         data.forEach(({img, alt, name, number, price}) => {
-    //             new Snowboard(img, alt, name, number, price).render();
-    //         });
-    //     });
+    getData('http://localhost:3000/snowboards')
+        .then(data => {
+            data.forEach(({img, alt, name, number, price}) => {
+                new Snowboard(img, alt, name, number, price).render();
+            })
+        })
+        .then(() => {
+            const slides = document.querySelectorAll('.snowboards__slider__item'),
+                  slidesField = document.querySelector('.snowboards__slider__inner');
 
-    new Snowboard(
-        'img/snowboards/board_6.png',
-        'snowboard_6',
-        'Black And White',
-        '22-506',
-        40
-    ).render();
-
+            
+            slides.forEach(item => {
+                const width = window.getComputedStyle(item).width;
+                counter = width.slice(0, width.length-2) * slides.length;
+                item.style.opacity = 0.4;
+                item.classList.remove('price');
+            });
+        
+            slidesField.style.cssText = `width: ${counter} + "px"; left: -41%`;
+        
+            slides[2].style.opacity = 1;
+            slides[2].classList.add('price');
+            
+        });
     
-
 
     // slider
-
-    
-    slides.forEach(item => {
-        const width = window.getComputedStyle(item).width;
-        counter = width.slice(0, width.length-2) * slides.length;
-        item.style.opacity = 0.4;
-        item.classList.remove('price');
-    });
-
-    slidesField.style.cssText = `width: ${counter} + "px"; left: -41%`
-
-    slides[2].style.opacity = 1;
-    slides[2].classList.add('price');
-    
 
 
     function getItem(arrow) {
@@ -95,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slides.forEach(item => {
             item.style.opacity = 0.4;
             item.classList.remove('price');
-         });
+        });
 
         const other = document.createElement('div');
         other.classList.add('snowboards__slider__item');
@@ -119,9 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    arrowPrev.addEventListener('click', () => getItem(arrowPrev));
+    arrowPrev.addEventListener('click', (e) => getItem(e.target.offsetParent));
 
-    arrowNext.addEventListener('click', () => getItem(arrowNext));
+    arrowNext.addEventListener('click', (e) => getItem(e.target.offsetParent));
+
+
+    // adding goods to shopping cart
 
     const buttonCart = document.querySelector('.snowboards__btn'),
           quantity = document.querySelector('.header__basket__bag span'),
@@ -139,11 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         slideIndex++;
     });
-
-    // function final() {
-
-
-    // }
 
 
     // server
@@ -204,14 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         bgSlides[index].classList.add('show', 'fade');
     }
 
-    // hideSlides();
-    // showCurrentSlide();
-
-    // function changeBgSlides(index) {
-        
-    // }
-
-    // changeBgSlides(bgSlideIndex);
     const slidesInterval = setInterval(() => {
         hideSlides();
         showCurrentSlide(bgSlideIndex);
