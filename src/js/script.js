@@ -247,25 +247,25 @@ document.addEventListener('DOMContentLoaded', () => {
         selector.classList.remove('show');
     }
 
+    function calcTotal(price, selector) {
+        const total = document.querySelector(selector);
 
-    shoppingCart.addEventListener('click', () => {
-        openModal(modal);
+        total.innerHTML = parseInt(total.innerHTML) + parseInt(price.slice(0, price.length-2));
+    }
 
-        function calcTotal(price, selector) {
-            const total = document.querySelector(selector);
-
-            total.innerHTML = parseInt(total.innerHTML) + parseInt(price.slice(0, price.length-2));
-        }
+    
         
-        const wrappElement = modal.querySelector('.modal__content__items');
+    const wrappElement = modal.querySelector('.modal__content__items');
+    const toDelete = wrappElement.querySelector('.delete'),
+          totalBlock = document.querySelector('.modal__content__total'),
+          orderBtn = document.querySelector('.modal__content__btn');
 
+    function buildListItem() {
         arrItems.forEach(({img, alt, name, price}, i) => {
-            const toDelete = wrappElement.querySelector('.delete');
             toDelete.style.display = 'none';
+            totalBlock.style.display = 'flex';
 
-            
-            document.querySelector('.modal__content__total').style.display = 'flex';
-            document.querySelector('.modal__content__btn').style.display = 'block';
+            orderBtn.textContent = 'Make an order';
 
             const newElem = document.createElement('div');
             newElem.classList.add('modal__content__item');
@@ -279,12 +279,62 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="modal__content__item-name">${name}</div>
                     <div class="modal__content__item-price">${price}</div>
                 </div>
+                <img src="../icons/trash.png" alt="trash" class="modal__content__item-trash">
             `;
 
             wrappElement.append(newElem);
 
             calcTotal(price, '.modal__content__total span');
         });
+    }
+
+    function doIt() {
+        buildListItem();
+
+        const trashBtns = document.querySelectorAll('.modal__content__item-trash');
+        
+        trashBtns.forEach(item => {
+            item.addEventListener('click', (e) => {
+                
+                // itemPrice = e.target.parentElement.querySelector('.modal__content__item-price');
+
+
+                deleteItem(e.target);
+                doIt();
+
+                
+
+            });
+            
+        });
+    }
+
+    // delete item from cart
+
+    function deleteItem(elem) {
+        const totalPrice = document.querySelector('.modal__content__total span'),
+                items = document.querySelectorAll('.modal__content__item');
+
+        items.forEach((item, i) => {
+            if (elem.parentElement == item) {
+                arrItems.splice(i, 1);
+                totalPrice.innerHTML = 0;
+                item.remove();
+            }
+            if (totalPrice.innerHTML == 0) {
+                toDelete.style.display = 'block';
+                totalBlock.style.display = 'none';
+                orderBtn.textContent = 'Go to shop';
+            }
+            item.remove();
+        });
+    }
+
+    shoppingCart.addEventListener('click', () => {
+        openModal(modal);
+
+        doIt();
+
     });
 
     const closeBtn = document.querySelector('.modal__content__close');
@@ -298,11 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach(item => item.remove());
         total.innerHTML = 0;
     });
-
-
-
-
-
 
 
 
