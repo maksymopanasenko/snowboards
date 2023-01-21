@@ -7,17 +7,42 @@ document.addEventListener('DOMContentLoaded', () => {
     slides = document.querySelectorAll('.snowboards__slider__item'),
     slidesField = document.querySelector('.snowboards__slider__inner');
 
-    let slideIndex = 1,
-    counter;
+    const btnAddToCart = document.querySelector('.snowboards__btn'),
+    quantity = document.querySelector('.header__basket__bag span'),
+    amount = document.querySelector('.header__basket__amount span');
+    const arrItems = [];
+
+
+    let counter;
 
 
     class Snowboard {
-        constructor(img, alt, title, number, price) {
+        constructor(img, alt, title, number, price, available) {
             this.img = img;
             this.alt = alt;
             this.title = title;
             this.number = number;
             this.price = price;
+            this.available = available;
+        }
+
+        makeVisible() {
+            if (this.available) {
+                return `
+                    <div class="snowboards__slider__item-number">
+                        Identity nr: <span>${this.number}</span>
+                    </div>
+                    <div class="snowboards__slider__item-price">
+                        Price: <span>${this.price} €</span>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="snowboards__slider__item-unavailable">
+                        Unfortunatelly, the product is not available
+                    </div>                            
+                `;
+            }
         }
 
         render() {
@@ -29,12 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="snowboards__slider__item-title">
                         Article: <span>${this.title}</span>
                     </div>
-                    <div class="snowboards__slider__item-number">
-                        Identity nr: <span>${this.number}</span>
-                    </div>
-                    <div class="snowboards__slider__item-price">
-                        Price: <span>${this.price} €</span>
-                    </div>
+                    ${this.makeVisible()}
                 </div>
             `;
 
@@ -56,27 +76,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     getData('http://localhost:3000/snowboards')
         .then(data => {
-            data.forEach(({img, alt, name, number, price}) => {
-                new Snowboard(img, alt, name, number, price).render();
+            data.forEach(({img, alt, name, number, price, available}) => {
+                new Snowboard(img, alt, name, number, price, available).render();
             })
         })
         .then(() => {
             const slides = document.querySelectorAll('.snowboards__slider__item'),
-                  slidesField = document.querySelector('.snowboards__slider__inner');
+                  slidesField = document.querySelector('.snowboards__slider__inner'),
+                  un = document.querySelectorAll('.snowboards__slider__item-unavailable');
 
-            
+
             slides.forEach(item => {
                 const width = window.getComputedStyle(item).width;
                 counter = width.slice(0, width.length-2) * slides.length;
                 item.style.opacity = 0.4;
+                item.classList.remove('price', "unavailable");
+            });
+
+
+            
+            un.forEach(item => {
+                item.parentElement.parentElement.classList.add('unavailable');
                 item.classList.remove('price');
             });
         
             slidesField.style.cssText = `width: ${counter} + "px"; left: -41%`;
-        
+            
+
             slides[2].style.opacity = 1;
             slides[2].classList.add('price');
-            
         });
     
 
@@ -101,6 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[0].remove();
             slides[3].style.opacity = 1;
             slides[3].classList.add('price');
+            if (slides[3].classList.contains('unavailable')) {
+                slides[3].classList.remove('price');
+            }
         }
 
         if (arrow == arrowPrev) {
@@ -109,6 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[slides.length-1].remove();
             slides[1].style.opacity = 1;
             slides[1].classList.add('price');
+            if (slides[1].classList.contains('unavailable')) {
+                slides[1].classList.remove('price');
+            }
         }
     }
 
@@ -120,11 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // adding goods to shopping cart
 
-    const btnAddToCart = document.querySelector('.snowboards__btn'),
-          quantity = document.querySelector('.header__basket__bag span'),
-          amount = document.querySelector('.header__basket__amount span');
-    const arrItems = [];
-
+   
     function getDataItem() {
         const items = document.querySelectorAll('.snowboards__slider__item');
         
@@ -149,18 +179,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     btnAddToCart.addEventListener('click', () => {
-        const price = document.querySelectorAll('.snowboards__slider__item-price span');
+        const parents = document.querySelectorAll('.snowboards__slider__item');
+    
+        
+        parents.forEach(item => {
+            const priceItem = item.querySelector('.snowboards__slider__item-price span');
 
-        quantity.innerHTML = slideIndex;
-        price.forEach(item => {
-            console.log();
-            if (item.parentElement.parentElement.parentElement.classList.contains('price')) {
-                amount.innerHTML = parseInt(amount.innerHTML) + parseInt(item.innerHTML.slice(0, item.innerHTML.length-2));
-            };
+                if (item.classList.contains('price')) {
+                    quantity.innerHTML = arrItems.length + 1;
+                    amount.innerHTML = parseInt(amount.innerHTML) + parseInt(priceItem.innerHTML.slice(0, priceItem.innerHTML.length-2));
+            
+                    getDataItem();
+                }   else {
+                    return;
+                }
+
         });
-        slideIndex++;
-
-        getDataItem();
     });
 
 
@@ -265,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toDelete.style.display = 'none';
             totalBlock.style.display = 'flex';
 
+            orderBtn.classList.add('order');
             orderBtn.textContent = 'Make an order';
 
             const newElem = document.createElement('div');
@@ -295,15 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         trashBtns.forEach(item => {
             item.addEventListener('click', (e) => {
-                
-                // itemPrice = e.target.parentElement.querySelector('.modal__content__item-price');
-
-
                 deleteItem(e.target);
                 doIt();
-
-                
-
             });
             
         });
@@ -316,14 +344,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 items = document.querySelectorAll('.modal__content__item');
 
         items.forEach((item, i) => {
+
+            const price = item.querySelector('.modal__content__item-price');
+
             if (elem.parentElement == item) {
                 arrItems.splice(i, 1);
+                quantity.innerHTML = arrItems.length;
                 totalPrice.innerHTML = 0;
+                amount.innerHTML = parseInt(amount.innerHTML) - parseInt(price.innerHTML.slice(0, price.innerHTML.length-2));
                 item.remove();
             }
             if (totalPrice.innerHTML == 0) {
                 toDelete.style.display = 'block';
                 totalBlock.style.display = 'none';
+
+                orderBtn.classList.remove('order');
                 orderBtn.textContent = 'Go to shop';
             }
             item.remove();
@@ -334,7 +369,6 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(modal);
 
         doIt();
-
     });
 
     const closeBtn = document.querySelector('.modal__content__close');
@@ -348,6 +382,8 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach(item => item.remove());
         total.innerHTML = 0;
     });
+
+
 
 
 

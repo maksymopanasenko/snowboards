@@ -14,7 +14,7 @@
       "name": "Urban Sharp",
       "number": "22-501",
       "price": 142,
-      "available": true
+      "available": false
     },
     {
       "img": "img/snowboards/board_3.png",
