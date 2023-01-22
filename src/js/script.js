@@ -82,311 +82,321 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(() => {
             const slides = document.querySelectorAll('.snowboards__slider__item'),
-                  slidesField = document.querySelector('.snowboards__slider__inner'),
-                  un = document.querySelectorAll('.snowboards__slider__item-unavailable');
+                  slidesField = document.querySelector('.snowboards__slider__inner');
 
 
             slides.forEach(item => {
                 const width = window.getComputedStyle(item).width;
                 counter = width.slice(0, width.length-2) * slides.length;
                 item.style.opacity = 0.4;
-                item.classList.remove('price', "unavailable");
             });
 
 
             
-            un.forEach(item => {
-                item.parentElement.parentElement.classList.add('unavailable');
-                item.classList.remove('price');
-            });
+            addUnavailable();
         
             slidesField.style.cssText = `width: ${counter} + "px"; left: -41%`;
             
 
             slides[2].style.opacity = 1;
             slides[2].classList.add('price');
-        });
-    
 
-    // slider
+            // slider
 
 
-    function getItem(arrow) {
-        const slides = document.querySelectorAll('.snowboards__slider__item');
-        
-        slides.forEach(item => {
-            item.style.opacity = 0.4;
-            item.classList.remove('price');
-        });
-
-        const other = document.createElement('div');
-        other.classList.add('snowboards__slider__item');
-        other.style.opacity = 0.4;
-
-        if (arrow == arrowNext) {
-            other.innerHTML = slides[0].innerHTML;
-            slidesField.append(other);
-            slides[0].remove();
-            slides[3].style.opacity = 1;
-            slides[3].classList.add('price');
-            if (slides[3].classList.contains('unavailable')) {
-                slides[3].classList.remove('price');
-            }
-        }
-
-        if (arrow == arrowPrev) {
-            other.innerHTML = slides[slides.length-1].innerHTML;
-            slidesField.insertAdjacentElement('afterbegin', other);
-            slides[slides.length-1].remove();
-            slides[1].style.opacity = 1;
-            slides[1].classList.add('price');
-            if (slides[1].classList.contains('unavailable')) {
-                slides[1].classList.remove('price');
-            }
-        }
-    }
-
-
-    arrowPrev.addEventListener('click', (e) => getItem(e.target.offsetParent));
-
-    arrowNext.addEventListener('click', (e) => getItem(e.target.offsetParent));
-
-
-    // adding goods to shopping cart
-
-   
-    function getDataItem() {
-        const items = document.querySelectorAll('.snowboards__slider__item');
-        
-        items.forEach(item => {
-            if (item.classList.contains('price')) {
-                const img = item.querySelector('img').getAttribute('src'),
-                      alt = item.querySelector('img').getAttribute('alt'),
-                      name = item.querySelector('.snowboards__slider__item-title span').innerHTML,
-                      price = item.querySelector('.snowboards__slider__item-price span').innerHTML;
-
-
-                const obj = {
-                    img: img,
-                    alt: alt,
-                    name: name,
-                    price: price
-                }
-                arrItems.push(obj);
-            }
-        });
-    }
-
-
-    btnAddToCart.addEventListener('click', () => {
-        const parents = document.querySelectorAll('.snowboards__slider__item');
-    
-        
-        parents.forEach(item => {
-            const priceItem = item.querySelector('.snowboards__slider__item-price span');
-
-                if (item.classList.contains('price')) {
-                    quantity.innerHTML = arrItems.length + 1;
-                    amount.innerHTML = parseInt(amount.innerHTML) + parseInt(priceItem.innerHTML.slice(0, priceItem.innerHTML.length-2));
-            
-                    getDataItem();
-                }   else {
-                    return;
-                }
-
-        });
-    });
-
-
-    // server
-    
-    const form = document.querySelector('form');
-
-    bindPostData(form);
-
-    function bindPostData(form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-
-            const json = JSON.stringify(Object.fromEntries(formData.entries()));
-             
-            const postData = async (url, data) => {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: data
+            function getItem(arrow) {
+                const slides = document.querySelectorAll('.snowboards__slider__item');
+                
+                slides.forEach(item => {
+                    item.style.opacity = 0.4;
+                    item.classList.remove('price');
                 });
+
+                const other = document.createElement('div');
+                other.classList.add('snowboards__slider__item');
+                other.style.opacity = 0.4;
+
+                if (arrow == arrowNext) {
+                    other.innerHTML = slides[0].innerHTML;
+                    slidesField.append(other);
+                    slides[0].remove();
+                    slidesSettings(slides, 3);
+                }
+
+                if (arrow == arrowPrev) {
+                    other.innerHTML = slides[slides.length-1].innerHTML;
+                    slidesField.insertAdjacentElement('afterbegin', other);
+                    slides[slides.length-1].remove();
+                    slidesSettings(slides, 1);
+                }
+            }
+
+            function addUnavailable() {
+                const unTest = document.querySelectorAll('.snowboards__slider__item-unavailable');
+
+                unTest.forEach(item => {
+                    item.parentElement.parentElement.classList.add('unavailable');
+                    item.classList.remove('price');
+                });
+            }
+
+            function slidesSettings(arr, i) {
+                
+                addUnavailable();
+
+                arr[i].style.opacity = 1;
+                arr[i].classList.add('price');
+                if (arr[i].classList.contains('unavailable')) {
+                    arr[i].classList.remove('price');
+                }
+            }
+
+
+            arrowPrev.addEventListener('click', (e) => getItem(e.target.offsetParent));
+
+            arrowNext.addEventListener('click', (e) => getItem(e.target.offsetParent));
+
+
+            // adding goods to shopping cart
+
+        
+            function getDataItem() {
+                const items = document.querySelectorAll('.snowboards__slider__item');
+                
+                items.forEach(item => {
+                    if (item.classList.contains('price')) {
+                        const img = item.querySelector('img').getAttribute('src'),
+                            alt = item.querySelector('img').getAttribute('alt'),
+                            name = item.querySelector('.snowboards__slider__item-title span').innerHTML,
+                            price = item.querySelector('.snowboards__slider__item-price span').innerHTML;
+
+
+                        const obj = {
+                            img: img,
+                            alt: alt,
+                            name: name,
+                            price: price
+                        }
+                        arrItems.push(obj);
+                    }
+                });
+            }
+
+            // button
+
+            btnAddToCart.addEventListener('click', () => {
+                const parents = document.querySelectorAll('.snowboards__slider__item');
             
-                return await response.json();
-            };
-        
-            postData('http://localhost:3000/requests', json)
-            .then(data => {
-                console.log(data);
-            })
-            .catch(() =>{
-                console.log('error');
-            })
-            .finally(form.reset());
+                
+                parents.forEach(item => {
+                    const priceItem = item.querySelector('.snowboards__slider__item-price span');
 
-        });
-    }
+                    if (item.classList.contains('price')) {
+                        quantity.innerHTML = arrItems.length + 1;
+                        amount.innerHTML = parseInt(amount.innerHTML) + parseInt(priceItem.innerHTML.slice(0, priceItem.innerHTML.length-2));
+                
+                        getDataItem();
+                    } else if (item.classList.contains('unavailable')) {
+                        return;
+                    }
 
-
-    // bg slider auto
-
-    const bgSlides = document.querySelectorAll('.promo__bg img');
-          
-    let bgSlideIndex = 0;
-
-    function hideSlides() {
-        bgSlides.forEach(item => {
-            item.classList.remove('show');
-            item.classList.add('hide');
-        });
-    }
+                });
+            });
 
 
-    function showCurrentSlide(index) {
-        bgSlides[index].classList.remove('hide');
-        bgSlides[index].classList.add('show', 'fade');
-    }
+            // server
+            
+            const form = document.querySelector('form');
 
-    const slidesInterval = setInterval(() => {
-        hideSlides();
-        showCurrentSlide(bgSlideIndex);
+            bindPostData(form);
 
-        bgSlideIndex++;
+            function bindPostData(form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
 
-        if (bgSlideIndex > 2) {
-            bgSlideIndex = 0;
-        }
-    }, 8000);
+                    const formData = new FormData(form);
+
+                    const json = JSON.stringify(Object.fromEntries(formData.entries()));
+                    
+                    const postData = async (url, data) => {
+                        const response = await fetch(url, {
+                            method: "POST",
+                            headers: {
+                                'Content-type': 'application/json'
+                            },
+                            body: data
+                        });
+                    
+                        return await response.json();
+                    };
+                
+                    postData('http://localhost:3000/requests', json)
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(() =>{
+                        console.log('error');
+                    })
+                    .finally(form.reset());
+
+                });
+            }
 
 
-    // modal 
+            // bg slider auto
 
-    const modal = document.querySelector('.modal'),
-          shoppingCart = document.querySelector('.header__basket__bag-icon');
+            const bgSlides = document.querySelectorAll('.promo__bg img');
+                
+            let bgSlideIndex = 0;
 
-    function openModal(selector) {
-        selector.classList.add('show');
-    }
+            function hideSlides() {
+                bgSlides.forEach(item => {
+                    item.classList.remove('show');
+                    item.classList.add('hide');
+                });
+            }
 
-    function closeModal(selector) {
-        selector.classList.remove('show');
-    }
 
-    function calcTotal(price, selector) {
-        const total = document.querySelector(selector);
+            function showCurrentSlide(index) {
+                bgSlides[index].classList.remove('hide');
+                bgSlides[index].classList.add('show', 'fade');
+            }
 
-        total.innerHTML = parseInt(total.innerHTML) + parseInt(price.slice(0, price.length-2));
-    }
+            const slidesInterval = setInterval(() => {
+                hideSlides();
+                showCurrentSlide(bgSlideIndex);
 
-    
-        
-    const wrappElement = modal.querySelector('.modal__content__items');
-    const toDelete = wrappElement.querySelector('.delete'),
-          totalBlock = document.querySelector('.modal__content__total'),
-          orderBtn = document.querySelector('.modal__content__btn');
+                bgSlideIndex++;
 
-    function buildListItem() {
-        arrItems.forEach(({img, alt, name, price}, i) => {
-            toDelete.style.display = 'none';
-            totalBlock.style.display = 'flex';
+                if (bgSlideIndex > 2) {
+                    bgSlideIndex = 0;
+                }
+            }, 8000);
 
-            orderBtn.classList.add('order');
-            orderBtn.textContent = 'Make an order';
 
-            const newElem = document.createElement('div');
-            newElem.classList.add('modal__content__item');
+            // modal 
 
-            newElem.innerHTML = `
-                <div class="modal__content__item-number">${i+1}.</div>
-                <div class="modal__content__item-img">
-                    <img src="${img}" alt="${alt}">
-                </div>
-                <div class="modal__content__item__wrapper">
-                    <div class="modal__content__item-name">${name}</div>
-                    <div class="modal__content__item-price">${price}</div>
-                </div>
-                <img src="../icons/trash.png" alt="trash" class="modal__content__item-trash">
-            `;
+            const modal = document.querySelector('.modal'),
+                shoppingCart = document.querySelector('.header__basket__bag-icon');
 
-            wrappElement.append(newElem);
+            function openModal(selector) {
+                selector.classList.add('show');
+            }
 
-            calcTotal(price, '.modal__content__total span');
-        });
-    }
+            function closeModal(selector) {
+                selector.classList.remove('show');
+            }
 
-    function doIt() {
-        buildListItem();
+            function calcTotal(price, selector) {
+                const total = document.querySelector(selector);
 
-        const trashBtns = document.querySelectorAll('.modal__content__item-trash');
-        
-        trashBtns.forEach(item => {
-            item.addEventListener('click', (e) => {
-                deleteItem(e.target);
+                total.innerHTML = parseInt(total.innerHTML) + parseInt(price.slice(0, price.length-2));
+            }
+
+            
+                
+            const wrappElement = modal.querySelector('.modal__content__items');
+            const toDelete = wrappElement.querySelector('.delete'),
+                totalBlock = document.querySelector('.modal__content__total'),
+                orderBtn = document.querySelector('.modal__content__btn');
+
+            function buildListItem() {
+                arrItems.forEach(({img, alt, name, price}, i) => {
+                    toDelete.style.display = 'none';
+                    totalBlock.style.display = 'flex';
+
+                    orderBtn.classList.add('order');
+                    orderBtn.textContent = 'Make an order';
+
+                    const newElem = document.createElement('div');
+                    newElem.classList.add('modal__content__item');
+
+                    newElem.innerHTML = `
+                        <div class="modal__content__item-number">${i+1}.</div>
+                        <div class="modal__content__item-img">
+                            <img src="${img}" alt="${alt}">
+                        </div>
+                        <div class="modal__content__item__wrapper">
+                            <div class="modal__content__item-name">${name}</div>
+                            <div class="modal__content__item-price">${price}</div>
+                        </div>
+                        <img src="../icons/trash.png" alt="trash" class="modal__content__item-trash">
+                    `;
+
+                    wrappElement.append(newElem);
+
+                    calcTotal(price, '.modal__content__total span');
+                });
+            }
+
+            function doIt() {
+                buildListItem();
+
+                const trashBtns = document.querySelectorAll('.modal__content__item-trash');
+                
+                trashBtns.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        deleteItem(e.target);
+                        doIt();
+                    });
+                    
+                });
+            }
+
+            // delete item from cart
+
+            function deleteItem(elem) {
+                const totalPrice = document.querySelector('.modal__content__total span'),
+                        items = document.querySelectorAll('.modal__content__item');
+
+                items.forEach((item, i) => {
+
+                    const price = item.querySelector('.modal__content__item-price');
+
+                    if (elem.parentElement == item) {
+                        arrItems.splice(i, 1);
+                        quantity.innerHTML = arrItems.length;
+                        totalPrice.innerHTML = 0;
+                        amount.innerHTML = parseInt(amount.innerHTML) - parseInt(price.innerHTML.slice(0, price.innerHTML.length-2));
+                        item.remove();
+                    }
+                    if (totalPrice.innerHTML == 0) {
+                        toDelete.style.display = 'block';
+                        totalBlock.style.display = 'none';
+
+                        orderBtn.classList.remove('order');
+                        orderBtn.textContent = 'Go to shop';
+                    }
+                    item.remove();
+                });
+            }
+
+            shoppingCart.addEventListener('click', () => {
+                openModal(modal);
+
                 doIt();
             });
-            
+
+            const closeBtn = document.querySelector('.modal__content__close');
+
+            closeBtn.addEventListener('click', () => {
+                closeModal(modal);
+                
+                const items = document.querySelectorAll('.modal__content__item'),
+                    total = document.querySelector('.modal__content__total span');
+
+                items.forEach(item => item.remove());
+                total.innerHTML = 0;
+            });
+
+
+
+
+
         });
-    }
+    
 
-    // delete item from cart
-
-    function deleteItem(elem) {
-        const totalPrice = document.querySelector('.modal__content__total span'),
-                items = document.querySelectorAll('.modal__content__item');
-
-        items.forEach((item, i) => {
-
-            const price = item.querySelector('.modal__content__item-price');
-
-            if (elem.parentElement == item) {
-                arrItems.splice(i, 1);
-                quantity.innerHTML = arrItems.length;
-                totalPrice.innerHTML = 0;
-                amount.innerHTML = parseInt(amount.innerHTML) - parseInt(price.innerHTML.slice(0, price.innerHTML.length-2));
-                item.remove();
-            }
-            if (totalPrice.innerHTML == 0) {
-                toDelete.style.display = 'block';
-                totalBlock.style.display = 'none';
-
-                orderBtn.classList.remove('order');
-                orderBtn.textContent = 'Go to shop';
-            }
-            item.remove();
-        });
-    }
-
-    shoppingCart.addEventListener('click', () => {
-        openModal(modal);
-
-        doIt();
-    });
-
-    const closeBtn = document.querySelector('.modal__content__close');
-
-    closeBtn.addEventListener('click', () => {
-        closeModal(modal);
-        
-        const items = document.querySelectorAll('.modal__content__item'),
-              total = document.querySelector('.modal__content__total span');
-
-        items.forEach(item => item.remove());
-        total.innerHTML = 0;
-    });
-
-
-
-
-
+    
 
 
 
