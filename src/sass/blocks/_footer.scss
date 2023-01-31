@@ -17,9 +17,13 @@
             margin-top: 18px;
             list-style: none;
             &-item {
-                font-size: 14px;
-                font-weight: 300;
                 margin-top: 14px;
+                a {
+                    color: #fff;
+                    font-size: 14px;
+                    font-weight: 300;
+                    text-decoration: none;
+                }
             }
         }
 
@@ -49,7 +53,6 @@
                 img {
                     width: 30px;
                 }
-                
             }
         }
     }
@@ -68,14 +71,57 @@
 
         &__lang {
             position: relative;
-            &::before {
-                content: "";
-                position: absolute;                
-                height: 10px;
-                width: 15px;
-                background: url('../icons/united-states.png') center (center/cover) no-repeat;
-                left: -25px;
-                top: 5px;
+            cursor: pointer;
+
+            &-item {
+                display: block;
+                width: 125px;
+                text-align: center;
+                &::before {
+                    content: "";
+                    position: absolute;                
+                    height: 10px;
+                    width: 15px;
+                    left: -25px;
+                    top: 5px;
+                }
+            }
+            .eng {
+                &::before {
+                    background: url('../icons/united-states.png') center (center/cover) no-repeat;
+                }
+            }
+            .pl {
+                &::before {
+                    background: url('../icons/poland.png') center (center/cover) no-repeat;
+                }
+
+            }
+
+            &-list {
+                height: 20px;
+                display: none;
+                list-style: none;
+                color: #FFF;
+                font-weight: 300;
+                font-size: 14px;
+                line-height: 20px;
+                background: rgba(84, 84, 84, 0.467);
+                width: 100%;
+                text-align: center;
+                // &:hover {
+                //     &~.footer__undercontent__lang-item {
+                //         &::before {
+                //             background: url('../icons/united-states.png') center (center/cover) no-repeat;
+                //         }
+                //     }
+                // }
+            }
+            
+            .choose {
+                display: block;
+                position: absolute;
+                transform: translateY(-100%);
             }
         }
     }

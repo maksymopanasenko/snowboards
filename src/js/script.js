@@ -408,6 +408,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 8000);
 
+    // language
+
+    const language = document.querySelector('.footer__undercontent__lang'),
+          langItem = language.querySelector('.footer__undercontent__lang-item'),
+          langList = document.querySelector('.footer__undercontent__lang-list');
+
+    language.addEventListener('mouseenter', (e) => {
+        const target = e.target;
+        if (target && target.className == "footer__undercontent__lang") {
+            langList.classList.add('choose');
+        }
+    });
+
+    language.addEventListener('mouseleave', () => {
+        langList.classList.remove('choose');
+    });
+
+
+    langList.addEventListener('click', () => {
+        langList.classList.remove('choose');
+        if (langItem.classList.contains('pl')) {
+            langItem.classList.remove('pl');
+            langItem.classList.add('eng');
+            langItem.innerText = "Change language";
+            langList.innerText = "Polish";
+        } else {
+            langItem.classList.remove('eng');
+            langItem.classList.add('pl');
+            langItem.innerText = "Zmień język";
+            langList.innerText = "English";
+        }
+    });
+
+
+
 
     
 
