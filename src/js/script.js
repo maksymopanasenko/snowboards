@@ -80,8 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 new Snowboard(img, alt, name, number, price, available).render();
             })
         })
-        .then(() => {
-            const slides = document.querySelectorAll('.snowboards__slider__item'),
+        .then(shop);
+    
+    function shop() {
+        const slides = document.querySelectorAll('.snowboards__slider__item'),
                   slidesField = document.querySelector('.snowboards__slider__inner');
 
 
@@ -204,76 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
 
-            // server
-            
-            const form = document.querySelector('form');
-
-            bindPostData(form);
-
-            function bindPostData(form) {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-
-                    const formData = new FormData(form);
-
-                    const json = JSON.stringify(Object.fromEntries(formData.entries()));
-                    
-                    const postData = async (url, data) => {
-                        const response = await fetch(url, {
-                            method: "POST",
-                            headers: {
-                                'Content-type': 'application/json'
-                            },
-                            body: data
-                        });
-                    
-                        return await response.json();
-                    };
-                
-                    postData('http://localhost:3000/requests', json)
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(() =>{
-                        console.log('error');
-                    })
-                    .finally(form.reset());
-
-                });
-            }
-
-
-            // bg slider auto
-
-            const bgSlides = document.querySelectorAll('.promo__bg img');
-                
-            let bgSlideIndex = 0;
-
-            function hideSlides() {
-                bgSlides.forEach(item => {
-                    item.classList.remove('show');
-                    item.classList.add('hide');
-                });
-            }
-
-
-            function showCurrentSlide(index) {
-                bgSlides[index].classList.remove('hide');
-                bgSlides[index].classList.add('show', 'fade');
-            }
-
-            const slidesInterval = setInterval(() => {
-                hideSlides();
-                showCurrentSlide(bgSlideIndex);
-
-                bgSlideIndex++;
-
-                if (bgSlideIndex > 2) {
-                    bgSlideIndex = 0;
-                }
-            }, 8000);
-
-
             // modal 
 
             const modal = document.querySelector('.modal'),
@@ -343,6 +275,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+
+            function closeModalByBtn() {
+                if (orderBtn.classList.contains('order')) {
+
+                    // here must be a code related to payment process instead "return"
+                    return;
+                } else {
+                    closeModal(modal);
+                }
+            }
+
             // delete item from cart
 
             function deleteItem(elem) {
@@ -371,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+
             shoppingCart.addEventListener('click', () => {
                 openModal(modal);
 
@@ -389,12 +333,81 @@ document.addEventListener('DOMContentLoaded', () => {
                 total.innerHTML = 0;
             });
 
+            orderBtn.addEventListener('click', closeModalByBtn);
+
+    }
 
 
 
+    // server
+
+    const form = document.querySelector('form');
+
+    bindPostData(form);
+
+    function bindPostData(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            
+            const postData = async (url, data) => {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: data
+                });
+            
+                return await response.json();
+            };
+        
+            postData('http://localhost:3000/requests', json)
+            .then(data => {
+                console.log(data);
+            })
+            .catch(() =>{
+                console.log('error');
+            })
+            .finally(form.reset());
 
         });
-    
+    }
+
+
+    // bg slider auto
+
+    const bgSlides = document.querySelectorAll('.promo__bg img');
+        
+    let bgSlideIndex = 0;
+
+    function hideSlides() {
+        bgSlides.forEach(item => {
+            item.classList.remove('show');
+            item.classList.add('hide');
+        });
+    }
+
+
+    function showCurrentSlide(index) {
+        bgSlides[index].classList.remove('hide');
+        bgSlides[index].classList.add('show', 'fade');
+    }
+
+    const slidesInterval = setInterval(() => {
+        hideSlides();
+        showCurrentSlide(bgSlideIndex);
+
+        bgSlideIndex++;
+
+        if (bgSlideIndex > 2) {
+            bgSlideIndex = 0;
+        }
+    }, 8000);
+
 
     
 
@@ -405,3 +418,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
