@@ -42,7 +42,7 @@
             height: 35px;
             width: 40px;
             border: none;
-            // position: absolute;
+            cursor: pointer;
         }
 
         &__social {
@@ -109,13 +109,6 @@
                 background: rgba(84, 84, 84, 0.467);
                 width: 100%;
                 text-align: center;
-                // &:hover {
-                //     &~.footer__undercontent__lang-item {
-                //         &::before {
-                //             background: url('../icons/united-states.png') center (center/cover) no-repeat;
-                //         }
-                //     }
-                // }
             }
             
             .choose {

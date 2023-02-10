@@ -12,7 +12,7 @@ const htmlmin = require('gulp-htmlmin');
 gulp.task('server', function() {
     browserSync.init({
         server: {
-            baseDir: "dist"
+            baseDir: "src"
         }
         // proxy: "theage"
     });

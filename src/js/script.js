@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(shop);
     
+
     function shop() {
         const slides = document.querySelectorAll('.snowboards__slider__item'),
                   slidesField = document.querySelector('.snowboards__slider__inner');
@@ -98,8 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 counter = width.slice(0, width.length-2) * slides.length;
                 item.style.opacity = 0.4;
             });
-
-
             
             addUnavailable();
         
@@ -110,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[2].classList.add('price');
 
             // slider
-
 
             function getItem(arrow) {
                 const slides = document.querySelectorAll('.snowboards__slider__item');
@@ -231,7 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 total.innerHTML = parseInt(total.innerHTML) + parseInt(price.slice(0, price.length-2));
             }
 
-            
                 
             const wrappElement = modal.querySelector('.modal__content__items');
             const toDelete = wrappElement.querySelector('.delete'),
@@ -343,9 +340,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // read more in descr
+
+    const showMoreBtn = document.querySelector('.description__content-btn'),
+          textContent = document.querySelector('.description__content-text');
+
+    showMoreBtn.addEventListener('click', () => {
+        textContent.classList.toggle('more');
+        
+        if (textContent.classList.contains('more')) {
+            showMoreBtn.textContent = 'Hide';
+        } else {
+            showMoreBtn.textContent = 'Read more';
+            textContent.scrollTop = 0;
+        }
+    });
 
 
-    // server
+
+    // server connection
 
     const form = document.querySelector('form');
 
@@ -384,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // bg slider auto
+    // bg autoslider
 
     const bgSlides = document.querySelectorAll('.promo__bg img');
         
