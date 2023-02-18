@@ -9,14 +9,14 @@ In order to correct display all features you need to follow several steps:
 1. Clone the repository to your local enviroment using terminal (for example)
   `git clone https://github.com/maksymopanasenko/snowboards.git [folder name]`
    
-[folder name] - the name of forder where you want to place the project
+_[folder name] - the name of forder where you want to place the project_
 
-2. Set up all necesserly npm packages:
+2. Set up all necessarily npm packages: <br/>
   `npm i`
 
-3. Run json-server:
+3. Run json-server: <br/>
   `npx json-server db.json`
   
-4. Run gulp:
+4. Run gulp: <br/>
   `npx gulp`
 
