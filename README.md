@@ -6,7 +6,7 @@ A simple landing page with basic functionality. At the moment the site doesn't h
 ## How to discover
 
 In order to correct display all features you need to follow several steps:
-1. Clone the repository to your local enviroment using terminal (for example)
+1. Clone the repository to your local enviroment using terminal (for example) <br/>
   `git clone https://github.com/maksymopanasenko/snowboards.git [folder name]`
    
 _[folder name] - the name of forder where you want to place the project_
