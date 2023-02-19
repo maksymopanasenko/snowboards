@@ -8,14 +8,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const arrowNext = document.querySelector('#arrow-next'),
-    arrowPrev = document.querySelector('#arrow-prev'),
-    slides = document.querySelectorAll('.snowboards__slider__item'),
-    slidesField = document.querySelector('.snowboards__slider__inner');
+    const arrowsWrapper = document.querySelector('.snowboards__slider__arrows'),
+          arrowNext = arrowsWrapper.querySelector('#arrow-next'),
+          arrowPrev = arrowsWrapper.querySelector('#arrow-prev'),
+          slidesField = document.querySelector('.snowboards__slider__inner'),
+          sliderMessage = slidesField.querySelector('.snowboards__slider__message'),
+          btnAddToCart = document.querySelector('.snowboards__btn'),
+          quantity = document.querySelector('.header__basket__bag span'),
+          amount = document.querySelector('.header__basket__amount span');
 
-    const btnAddToCart = document.querySelector('.snowboards__btn'),
-    quantity = document.querySelector('.header__basket__bag span'),
-    amount = document.querySelector('.header__basket__amount span');
     const arrItems = [];
 
 
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    
+    // get data from server
 
     const getData = async (url) => {
         const res = await fetch(url);
@@ -80,8 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     }
 
-    getData('http://localhost:3000/snowboards')
+    getData('https://snowboard-json-server.onrender.com')
         .then(data => {
+            sliderMessage.remove();
+            arrowsWrapper.style.display = 'block';
+            btnAddToCart.style.display = 'block';
+
             data.forEach(({img, alt, name, number, price, available}) => {
                 new Snowboard(img, alt, name, number, price, available).render();
             })
@@ -90,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     function shop() {
-        const slides = document.querySelectorAll('.snowboards__slider__item'),
-                  slidesField = document.querySelector('.snowboards__slider__inner');
+        const slides = document.querySelectorAll('.snowboards__slider__item');
+                //   slidesField = document.querySelector('.snowboards__slider__inner');
 
 
             slides.forEach(item => {
