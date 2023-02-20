@@ -110,14 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (item.classList.contains('price')) {
                         quantity.innerHTML = arrItems.length + 1;
                         amount.innerHTML = parseInt(amount.innerHTML) + parseInt(priceItem.innerHTML.slice(0, priceItem.innerHTML.length-2));
-                        console.log(1)
+
                         getDataItem();
                     } else {
                         return;
                     }
                 });
             }
-        })
+        });
 
         slides.forEach(slide => {
             const width = window.getComputedStyle(slide).width;
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     totalBlock.style.display = 'none';
 
                     orderBtn.classList.remove('order');
-                    orderBtn.textContent = 'Go to shop';
+                    orderBtn.textContent = 'Back to shop';
                 }
                 item.remove();
             });

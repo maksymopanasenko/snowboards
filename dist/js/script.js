@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     ${this.makeVisible()}
                 </div>
-                <button class="add-btn">add</button>
+                <button class="snowboards__btn">add to cart</button>
             `;
 
             slidesField.append(elem);
@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             sliderMessage.remove();
             arrowsWrapper.style.display = 'block';
-            // btnAddToCart.style.display = 'block';
 
             data.forEach(({img, alt, name, number, price, available}) => {
                 new Snowboard(img, alt, name, number, price, available).render();
@@ -95,19 +94,36 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     function shop() {
-        const slides = document.querySelectorAll('.snowboards__slider__item');
+        const slides = document.querySelectorAll('.snowboards__slider__item'),
+              sliderInner = document.querySelector('.snowboards__slider__inner');
+            
 
-        const showedSlide = document.querySelector('.price'),
-              addBtn = document.querySelector('.add-btn');
+        sliderInner.addEventListener('click', (e) => {
+            const target = e.target;
+            console.log(target)
+            if (target.nodeName == 'BUTTON') {
+                const slides = document.querySelectorAll('.snowboards__slider__item');
 
+                slides.forEach(item => {
+                    const priceItem = item.querySelector('.snowboards__slider__item-price span');
+    
+                    if (item.classList.contains('price')) {
+                        quantity.innerHTML = arrItems.length + 1;
+                        amount.innerHTML = parseInt(amount.innerHTML) + parseInt(priceItem.innerHTML.slice(0, priceItem.innerHTML.length-2));
 
-        slides.forEach(item => {
-            const width = window.getComputedStyle(item).width;
-            counter = width.slice(0, width.length-2) * slides.length;
-            item.style.opacity = 0.4;
+                        getDataItem();
+                    } else {
+                        return;
+                    }
+                });
+            }
         });
 
-
+        slides.forEach(slide => {
+            const width = window.getComputedStyle(slide).width;
+            counter = width.slice(0, width.length-2) * slides.length;
+            slide.style.opacity = 0.4;
+        });
         
         addUnavailable();
     
@@ -117,11 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
         slides[2].style.opacity = 1;
         slides[2].classList.add('price');
 
+        
         // slider
 
         function getItem(arrow) {
             const slides = document.querySelectorAll('.snowboards__slider__item');
-            
+                  
             slides.forEach(item => {
                 item.style.opacity = 0.4;
                 item.classList.remove('price');
@@ -130,15 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const other = document.createElement('div');
             other.classList.add('snowboards__slider__item');
             other.style.opacity = 0.4;
-
-            
-
+        
             if (arrow == arrowNext) {
                 other.innerHTML = slides[0].innerHTML;
                 slidesField.append(other);
                 slides[0].remove();
                 slidesSettings(slides, 3);
-                showBtn();
             }
 
             if (arrow == arrowPrev) {
@@ -146,8 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 slidesField.insertAdjacentElement('afterbegin', other);
                 slides[slides.length-1].remove();
                 slidesSettings(slides, 1);
-                showBtn();
             }
+            showBtn();
         }
 
         function addUnavailable() {
@@ -187,9 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
             items.forEach(item => {
                 if (item.classList.contains('price')) {
                     const img = item.querySelector('img').getAttribute('src'),
-                        alt = item.querySelector('img').getAttribute('alt'),
-                        name = item.querySelector('.snowboards__slider__item-title span').innerHTML,
-                        price = item.querySelector('.snowboards__slider__item-price span').innerHTML;
+                          alt = item.querySelector('img').getAttribute('alt'),
+                          name = item.querySelector('.snowboards__slider__item-title span').innerHTML,
+                          price = item.querySelector('.snowboards__slider__item-price span').innerHTML;
 
 
                     const obj = {
@@ -203,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        
         // button appearing
 
 
@@ -211,53 +224,21 @@ document.addEventListener('DOMContentLoaded', () => {
         function showBtn() {
             const slides = document.querySelectorAll('.snowboards__slider__item');
 
-
-
             slides.forEach(item => {
                 const btn = item.querySelector('button');
-                const addStyle = () => {
-                    btn.style.display = 'block';
-                }
-                const removeStyle = () => {
-                    btn.style.display = 'none';
-                }
 
-                if (item.classList.contains('price')) {
-                    
-                    console.log(item.className)
-                    item.addEventListener('mouseenter', addStyle);
-                    item.addEventListener('mouseleave', removeStyle);
-                } else {
-                    // console.log(item.className)
-                    
-                    item.removeEventListener('mouseenter', addStyle);
-                    item.removeEventListener('mouseleave', removeStyle);
-                }
+                item.addEventListener('mouseenter', () => {
+                    if (item.classList.contains('price')) {
+                        btn.style.display = 'block';                        
+                    };
+                });
+                item.addEventListener('mouseleave', () => {
+                    if (item.classList.contains('price')) {
+                        btn.style.display = 'none';
+                    };
+                });
             });
-        }
-        
-        
-
-        // button
-
-        addBtn.addEventListener('click', () => {
-            const parents = document.querySelectorAll('.snowboards__slider__item');
-        
-            
-            parents.forEach(item => {
-                const priceItem = item.querySelector('.snowboards__slider__item-price span');
-
-                if (item.classList.contains('price')) {
-                    quantity.innerHTML = arrItems.length + 1;
-                    amount.innerHTML = parseInt(amount.innerHTML) + parseInt(priceItem.innerHTML.slice(0, priceItem.innerHTML.length-2));
-            
-                    getDataItem();
-                } else if (item.classList.contains('unavailable')) {
-                    return;
-                }
-
-            });
-        });
+        }      
 
     
 
@@ -363,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     totalBlock.style.display = 'none';
 
                     orderBtn.classList.remove('order');
-                    orderBtn.textContent = 'Go to shop';
+                    orderBtn.textContent = 'Back to shop';
                 }
                 item.remove();
             });
