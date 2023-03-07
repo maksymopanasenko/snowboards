@@ -26,7 +26,9 @@
         // experiment
 
         &_pack {
-            margin-top: 80px;
+            padding-top: 30px;
+            background-color: #c2c1c1;
+            margin-top: 60px;
             display: flex;
             justify-content: space-around;
             min-height: 300px;
@@ -46,10 +48,11 @@
             width: 200px;
             text-align: center;
             text-transform: uppercase;
+            cursor: pointer;
+            border: 3px solid black;
             &_active {
                 color: #000;
                 background: #fff;
-                border: 3px solid black;
             }
         }
 

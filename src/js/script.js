@@ -495,6 +495,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    // news wall
+
+    const panelTabs = document.querySelector('.features__images_panel'),
+          newsTabs = panelTabs.querySelectorAll('.features__images_item');
+
+    panelTabs.addEventListener('click', (e) => {
+        const target = e.target;
+
+        if (target && target.nodeName == 'LI') {
+            chooseCurrentTab(newsTabs, target);
+        }
+    });
+
+    function chooseCurrentTab(tabs, activeTab) {
+        tabs.forEach(tab => {
+            if (tab == activeTab) {
+                tab.classList.add('features__images_item_active');
+            } else {
+                tab.classList.remove('features__images_item_active');
+            }
+        });
+    }
+
+
+
+
+
 
 
 
