@@ -495,6 +495,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    // news wall
+
+    let tabIndex = 0;
+
+    const panelTabs = document.querySelector('.features__images_panel'),
+          newsTabs = panelTabs.querySelectorAll('.features__images_item');
+
+    panelTabs.addEventListener('click', (e) => {
+        const target = e.target;
+
+        if (target && target.nodeName == 'LI') {
+            chooseCurrentTab(newsTabs, target);
+        }
+
+        showOneBlock(tabIndex, infoBlocks);
+    });
+
+    function chooseCurrentTab(tabs, activeTab) {
+        tabs.forEach((tab, i) => {
+            if (tab == activeTab) {
+                tab.classList.add('features__images_item_active');
+                tabIndex = i;
+            } else {
+                tab.classList.remove('features__images_item_active');
+            }
+        });
+    }
+
+    // infoboard
+
+    const infoBlocks = document.querySelectorAll('.features__images_display');
+
+    showOneBlock(tabIndex, infoBlocks);
+
+    function showOneBlock(index, blocks) {
+        hideAllBlocks(blocks);
+
+        blocks.forEach((block, i) => {
+            if (index == i) {
+                block.classList.remove('hidden');
+                block.classList.add('active');   
+            }
+        });   
+    }
+
+    function hideAllBlocks(blocks) {
+        blocks.forEach(block => {
+            block.classList.remove('active');
+            block.classList.add('hidden');
+        });
+    }
+
+
+
+
+
 
 
 

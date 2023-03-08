@@ -27,7 +27,7 @@
 
         &_pack {
             padding-top: 30px;
-            background-color: #c2c1c1;
+            background-color: #e3e3e3;
             margin-top: 60px;
             display: flex;
             justify-content: space-around;
@@ -56,9 +56,13 @@
             }
         }
 
+        &_container {
+            width: 550px;
+            overflow: hidden;
+        }
+
         &_display {
             width: 550px;
-            display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, minmax(100px, auto));
             row-gap: 30px;
@@ -112,4 +116,12 @@
             font-size: 16px;
         }
     }
+}
+
+.active {
+    display: grid;
+}
+
+.hidden {
+    display: none;
 }
