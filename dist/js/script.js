@@ -81,12 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     }
 
-    getData('https://snowboard-json-server.onrender.com')
+    getData('/db.json')
         .then(data => {
+            console.log(data.snowboards)
             sliderMessage.remove();
             arrowsWrapper.style.display = 'block';
 
-            data.forEach(({img, alt, name, number, price, available}) => {
+            data.snowboards.forEach(({img, alt, name, number, price, available}) => {
                 new Snowboard(img, alt, name, number, price, available).render();
             })
         })
@@ -417,14 +418,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return await response.json();
             };
         
-            postData('http://localhost:3000/requests', json)
-            .then(data => {
-                console.log(data);
-            })
-            .catch(() =>{
-                console.log('error');
-            })
-            .finally(form.reset());
+            postData('/', json)
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(() =>{
+                    console.log('error');
+                })
+                .finally(form.reset());
 
         });
     }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/js/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,5 +20,9 @@
     "gulp-sass": "^5.1.0",
     "json-server": "^0.17.1",
     "sass": "^1.56.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "nodemailer": "^6.9.1"
   }
 }

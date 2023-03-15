@@ -31,7 +31,7 @@
             margin-top: 60px;
             display: flex;
             justify-content: space-around;
-            min-height: 300px;
+            min-height: 345px;
         }      
         
         &_panel {
@@ -65,7 +65,7 @@
             width: 550px;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, minmax(100px, auto));
-            row-gap: 30px;
+            row-gap: 15px;
             column-gap: 20px;
         }
 
@@ -74,12 +74,6 @@
             font-size: 20px;
             font-weight: 700;
         }
-
-        // &_data {
-        //     display: flex;
-        //     flex-direction: column;
-        //     justify-content: space-around;
-        // }
 
         &_pos {
             display: flex;
@@ -100,6 +94,10 @@
                     // text-decoration: none;
                     color: #000;
                 }
+            }
+
+            &:last-child {
+                margin: 0;
             }
         }
 
