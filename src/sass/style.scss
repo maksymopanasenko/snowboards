@@ -14,6 +14,13 @@ body {
     margin: 0 auto;
 }
 
+.divider {
+    height: 1px;
+    width: 150px;
+    background: #000;
+    margin: 10px auto;
+}
+
 
 @import 'blocks/modal.scss';
 @import 'blocks/header.scss';
@@ -21,4 +28,5 @@ body {
 @import 'blocks/snowboards.scss';
 @import 'blocks/description.scss';
 @import 'blocks/features.scss';
+@import 'blocks/team.scss';
 @import 'blocks/footer.scss';

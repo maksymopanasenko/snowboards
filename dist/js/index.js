@@ -54,7 +54,7 @@ async function handleRequest(request, response) {
             from:process.env.EMAIL,
             to: ['maxpanas008@gmail.com', 'm.opanasenko1997@gmail.com'],
             subject: 'Newsletter request',
-            text: `Please send me news: ${body.email}`
+            text: `${body.email}`
         };
 
         response.setHeader('Content-Type', 'text/html; charset=utf-8');

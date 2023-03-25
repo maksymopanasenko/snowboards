@@ -70,9 +70,10 @@ gulp.task('js', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
-// gulp.task('db', function() {
-//     return gulp.src('src/*json')
-//         .pipe(gulp.dest('src/icons'));
-// });
+gulp.task('json', function() {
+    return gulp.src('src/*json')
+        .pipe(gulp.dest('src/'))
+        .pipe(gulp.dest('dist/'));
+});
 
-gulp.task('default', gulp.parallel('watch', 'server', 'styles', 'images', 'icons', 'html', 'js'));
+gulp.task('default', gulp.parallel('watch', 'server', 'styles', 'images', 'icons', 'html', 'js', 'json'));
