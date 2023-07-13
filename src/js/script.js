@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         makeVisible() {
             if (this.available) {
                 return `
-                    <div class="snowboards__slider__item-number">
+                    <div class="snowboards__slider__item-label snowboards__slider__item-number">
                         Identity nr: <span>${this.number}</span>
                     </div>
-                    <div class="snowboards__slider__item-price">
+                    <div class="snowboards__slider__item-label snowboards__slider__item-price">
                         Price: <span>${this.price} €</span>
                     </div>
                 `;
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elem.innerHTML = `
                 <img src=${this.img} alt=${this.alt}>
                 <div class="snowboards__slider__item__descr">
-                    <div class="snowboards__slider__item-title">
+                    <div class="snowboards__slider__item-label snowboards__slider__item-title">
                         Article: <span>${this.title}</span>
                     </div>
                     ${this.makeVisible()}
@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sliderInner.addEventListener('click', (e) => {
             const target = e.target;
-            console.log(target)
             if (target.nodeName == 'BUTTON') {
                 const slides = document.querySelectorAll('.snowboards__slider__item');
 
@@ -374,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showMoreBtn.addEventListener('click', () => {
         textContent.classList.toggle('more');
+        textContent.parentElement.classList.toggle('frame');
         
         if (textContent.classList.contains('more')) {
             showMoreBtn.textContent = 'Hide';

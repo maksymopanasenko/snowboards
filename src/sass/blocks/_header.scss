@@ -42,8 +42,9 @@
             cursor: pointer;
             span {
                 position: absolute;
-                left: 10px;
-                top: 14px;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 12px;
                 font-size: 10px;
                 z-index: -1;
             }

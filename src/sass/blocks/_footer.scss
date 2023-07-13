@@ -72,6 +72,7 @@
         &__lang {
             position: relative;
             cursor: pointer;
+            min-width: 110px;
             &-label {
                 display: block;
                 text-align: center;
@@ -90,6 +91,9 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 10px;
+            select {
+                outline: unset;
+            }
             img {
                 width: 20px;
                 height: 15px;

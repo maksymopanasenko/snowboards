@@ -53,13 +53,10 @@
                 margin: 0 auto;
             }
             &__descr {
-                padding-left: 60px;
                 margin-top: 20px;
             }
-            &-number {
-                margin-top: 5px;
-            }
-            &-price {
+            &-label {
+                padding-left: 60px;
                 margin-top: 5px;
             }
             span {
@@ -70,6 +67,7 @@
             &-unavailable {
                 margin-top: 15px;
                 color: red;
+                text-align: center;              
             }
         }
 

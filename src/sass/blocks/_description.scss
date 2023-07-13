@@ -3,25 +3,29 @@
     background: url('../img/second_bg/bg__img.jpg') center (center/cover) no-repeat;
     &__content {
         width: 600px;
+        padding-top: 120px;
         color: #fff;
-        padding-top: 140px;
+        &_holder {
+            padding: 20px 10px 20px 20px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
         &-title {
             width: 400px;
             font-size: 45px;
             text-transform: uppercase;
+            margin-bottom: 30px;
         }
         &-text {
             overflow-y: hidden;
             height: 250px;
-            margin-top: 20px;
-            padding: 0 10px;
+            padding-right: 10px;
             font-weight: 300;
+            font-size: 18px;
             line-height: 28px;
             transition: 0.5s all;
             text-overflow: ellipsis;
-            // background: #ffffff11;
-            background: radial-gradient(circle, rgba(238,238,238,0.1517857142857143) 0%, rgba(255,255,255,0.008928571428571397) 100%);
-
+            text-shadow: 0 0 2px black, 0 0 2px black;
         }
         
         &-btn {
@@ -29,15 +33,36 @@
             height: 40px;
             font-size: 16px;
             background: #fff;
-            color: #000;
             border: none;
             cursor: pointer;
             display: block;
             margin: 30px 0 0 225px;
+            transition: .3s;
+            &:hover {
+                color: #fff;
+                background: #666666;
+            }
         }
     }
 }
 
 .more {
     overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+        &-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 10px;
+        }
+        &-thumb {
+            background: white;
+            border-radius: 10px;
+        }
+    }
 }
+
+.frame {
+    background: #ffffff18;
+    border: 2px solid rgb(141, 141, 141);
+}
+

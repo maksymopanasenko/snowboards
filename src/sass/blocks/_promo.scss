@@ -13,24 +13,27 @@
     }
     &__wrapper {
         width: 560px;
-        font-size: 60px;
-        text-shadow: 0 0 4px white, 0 0 4px white, 0 0 4px white;
         text-transform: uppercase;
         padding: 220px 0 0 20px;
+        font-size: 60px;
+        text-align: right;
+    }
+    &__title {
+        text-shadow: 0 0 4px white, 0 0 4px white, 0 0 4px white;
+        text-align: left;
     }
     &__btn {
+        text-align: center;
         width: 100px;
         height: 40px;
         margin-top: 50px;
-        float: right;
+        font-size: 13px;
         background: #000;
-        a {
-            display: block;
-            height: 100%;
-            line-height: 38px;
-            color: #fff;
-            text-decoration: none;
-        }
+        display: inline-block;
+        height: 100%;
+        line-height: 38px;
+        color: #fff;
+        text-decoration: none;
     }
 }
 
