@@ -1,11 +1,5 @@
 'use strict';
 
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const arrowsWrapper = document.querySelector('.snowboards__slider__arrows'),
@@ -83,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     getData('/db.json')
         .then(data => {
-            console.log(data.snowboards)
             sliderMessage.remove();
             arrowsWrapper.style.display = 'block';
 
@@ -464,37 +457,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // language
 
     const language = document.querySelector('.footer__undercontent__lang'),
-          langItem = language.querySelector('.footer__undercontent__lang-item'),
-          langList = document.querySelector('.footer__undercontent__lang-list');
-
-    language.addEventListener('mouseenter', (e) => {
-        const target = e.target;
-        if (target && target.className == "footer__undercontent__lang") {
-            langList.classList.add('choose');
-        }
-    });
-
-    language.addEventListener('mouseleave', () => {
-        langList.classList.remove('choose');
-    });
+          langLabel = language.querySelector('.footer__undercontent__lang-label'),
+          langList = document.querySelector('.footer__undercontent__lang-list'),
+          langImg = document.querySelector('.footer__undercontent__lang img');
 
 
-    langList.addEventListener('click', () => {
-        langList.classList.remove('choose');
-        if (langItem.classList.contains('pl')) {
-            langItem.classList.remove('pl');
-            langItem.classList.add('eng');
-            langItem.innerText = "Change language";
-            langList.innerText = "Polish";
+    langList.addEventListener('change', (e) => {
+        if (e.target.options.selectedIndex == 0) {
+            langImg.src = 'icons/usa.png';
+            langLabel.innerText = 'Zmień język';
         } else {
-            langItem.classList.remove('eng');
-            langItem.classList.add('pl');
-            langItem.innerText = "Zmień język";
-            langList.innerText = "English";
+            langImg.src = 'icons/poland.png';
+            langLabel.innerText = 'Change language';
         }
     });
-
-
 
     // news wall
 
@@ -547,22 +523,4 @@ document.addEventListener('DOMContentLoaded', () => {
             block.classList.add('hidden');
         });
     }
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
 });
-
